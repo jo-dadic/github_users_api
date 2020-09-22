@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Search from "./Components/Search";
+import Results from "./Components/Results";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+
+export default class App extends Component {
+  state = {
+    results: {},
+    repos: [],
+  };
+
+  resultsHandler = (dataUser, dataRepo) => {
+    this.setState({ results: dataUser, repos: dataRepo });
+  };
+
+  resetApp = () => {
+    this.setState({ results: "", repos: "" });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Find a GitHub user</h1>
+        <Search onResult={this.resultsHandler} />
+        <Results dataUser={this.state.results} dataRepo={this.state.repos} />
+        <br />
+        <button onClick={this.resetApp}>Reset</button>
+      </div>
+    );
+  }
 }
-
-export default App;
